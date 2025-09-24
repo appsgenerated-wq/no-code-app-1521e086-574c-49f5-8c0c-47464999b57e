@@ -1,0 +1,23 @@
+name: NiceApp
+description: A nice application with a professional landing page and user authentication.
+
+features:
+  authentication:
+    user_entity: User
+    jwt_secret: env(JWT_SECRET)
+
+entities:
+  User:
+    properties:
+      name: string(required=true)
+      email: string(unique=true, required=true)
+      password: password
+      role:
+        type: enum
+        values: [Admin, User]
+        default: User
+    access_policies:
+      - role: Admin
+        permissions: [create, read, update, delete]
+      - role: User
+        permissions: [read, update]
